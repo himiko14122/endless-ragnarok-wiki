@@ -1,0 +1,35 @@
+{
+  "name": "endless-ragnarok-wiki",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.12.4",
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/generate-content-manifest.mjs && node scripts/generate-sitemap.mjs && next build && node scripts/mirror-en-to-root.mjs",
+    "cf-build": "corepack enable && pnpm install --frozen-lockfile && pnpm run build",
+    "preview": "npx wrangler pages dev out"
+  },
+  "dependencies": {
+    "@next/mdx": "^15.5.19",
+    "clsx": "^2.1.1",
+    "github-slugger": "^2.0.0",
+    "lucide-react": "^1.21.0",
+    "next": "^15.5.19",
+    "next-intl": "^4.13.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.2.9",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^6.0.3"
+  }
+}

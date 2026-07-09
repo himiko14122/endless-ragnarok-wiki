@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/_next/*",
+    "/ads/*",
+    "/images/*",
+    "/favicon*",
+    "/*.js",
+    "/*.css",
+    "/*.json",
+    "/*.xml",
+    "/*.txt",
+    "/*.webp",
+    "/*.png",
+    "/*.jpg",
+    "/*.svg",
+    "/*.ico",
+    "/*.woff2",
+    "/*.woff",
+    "/*.ttf",
+    "/*.map",
+    "/api/*"
+  ]
+}

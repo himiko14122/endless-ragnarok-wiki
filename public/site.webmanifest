@@ -1,0 +1,13 @@
+{
+  "name": "Endless Ragnarok Wiki",
+  "short_name": "ER Wiki",
+  "description": "The ultimate Endless Ragnarok wiki — character tier lists, Conflux guides, Master Traits, builds, and boss strategies.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0d2b",
+  "theme_color": "#00c8ff",
+  "icons": [
+    { "src": "/favicon-96x96.png", "sizes": "96x96", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

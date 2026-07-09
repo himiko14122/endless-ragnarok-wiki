@@ -1,0 +1,9 @@
+# English root redirect
+/  /en/  302
+
+# Fatebeaker → Fatebreaker slug migration
+/en/endgame/fatebeaker-quests-guide/  /en/endgame/fatebreaker-quests-guide/  301
+/en/guides/fatebeaker-quests-guide/  /en/endgame/fatebreaker-quests-guide/  301
+/de/endgame/fatebeaker-quests-guide/  /de/endgame/fatebreaker-quests-guide/  301
+/ja/endgame/fatebeaker-quests-guide/  /ja/endgame/fatebreaker-quests-guide/  301
+/uk/endgame/fatebeaker-quests-guide/  /uk/endgame/fatebreaker-quests-guide/  301
