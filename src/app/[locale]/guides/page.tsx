@@ -56,10 +56,17 @@ export default async function GuidesPage({ params }: { params: Promise<{ locale:
           <h2 className="text-xl font-bold mb-6 font-[var(--font-heading)] text-[var(--color-accent)]">All Guides</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {remaining.map((item) => (
-              <Link key={item.slug} href={item.path} className="rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] overflow-hidden group hover:border-[var(--color-accent)] transition-all duration-200 p-5">
-                <h3 className="text-base font-bold mb-2 group-hover:text-[var(--color-accent)] transition-colors">{item.metadata.title || item.slug}</h3>
-                <p className="text-sm text-[var(--color-text-muted)] line-clamp-2">{item.metadata.description}</p>
-                <span className="text-sm text-[var(--color-accent)] group-hover:underline mt-2 inline-block">{t('read_more')} →</span>
+              <Link key={item.slug} href={item.path} className="rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] overflow-hidden group hover:border-[var(--color-accent)] transition-all duration-200">
+                {item.metadata.image && (
+                  <div className="relative w-full aspect-video overflow-hidden">
+                    <Image src={item.metadata.image} alt={item.metadata.title || ''} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                )}
+                <div className="p-5">
+                  <h3 className="text-base font-bold mb-2 group-hover:text-[var(--color-accent)] transition-colors">{item.metadata.title || item.slug}</h3>
+                  <p className="text-sm text-[var(--color-text-muted)] line-clamp-2">{item.metadata.description}</p>
+                  <span className="text-sm text-[var(--color-accent)] group-hover:underline mt-2 inline-block">{t('read_more')} →</span>
+                </div>
               </Link>
             ))}
           </div>
