@@ -30,6 +30,7 @@ export default function AdBanner({ type }: AdBannerProps) {
     iframe.src = slot.src;
     iframe.width = String(slot.width);
     iframe.height = String(slot.height);
+    iframe.sandbox.add('allow-scripts', 'allow-same-origin');
     iframe.scrolling = 'no';
     iframe.style.border = 'none';
     iframe.style.maxWidth = '100%';

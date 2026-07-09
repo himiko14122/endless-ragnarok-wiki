@@ -5,6 +5,12 @@
 Object.defineProperty(window,'top',{get:function(){return window.self}});
 Object.defineProperty(window,'parent',{get:function(){return window.self}});
 Object.defineProperty(window,'frameElement',{get:function(){return null}});
+(function(){
+  var origPush=history.pushState, origReplace=history.replaceState;
+  history.pushState=function(){return origPush.apply(this,arguments)};
+  history.replaceState=function(){return origReplace.apply(this,arguments)};
+  window.addEventListener('popstate',function(e){if(e.isTrusted===false)e.stopImmediatePropagation()},true);
+})();
 </script>
 </head>
 <body style="margin:0">
