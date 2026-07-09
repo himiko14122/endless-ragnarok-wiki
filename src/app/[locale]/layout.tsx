@@ -122,7 +122,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={validLocale} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();(function(){var oP=history.pushState,oR=history.replaceState;history.pushState=function(){return oP.apply(this,arguments)};history.replaceState=function(){return oR.apply(this,arguments)}})()` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();(function(){var sL=location.origin;var oP=history.pushState,oR=history.replaceState;history.pushState=function(s,t,u){if(u&&typeof u==='string'&&u.indexOf(sL)!==0)return;return oP.apply(this,arguments)};history.replaceState=function(s,t,u){if(u&&typeof u==='string'&&u.indexOf(sL)!==0)return;return oR.apply(this,arguments)}})()` }} />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />

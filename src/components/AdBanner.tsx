@@ -8,12 +8,6 @@ export interface AdBannerProps {
   type?: AdType | '';
 }
 
-const HIJACK_GUARD = `
-Object.defineProperty(window,'top',{get:function(){return window.self},configurable:true});
-Object.defineProperty(window,'parent',{get:function(){return window.self},configurable:true});
-Object.defineProperty(window,'frameElement',{get:function(){return null},configurable:true});
-`.replace(/\n/g, '');
-
 export default function AdBanner({ type }: AdBannerProps) {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,14 +17,23 @@ export default function AdBanner({ type }: AdBannerProps) {
   }, []);
 
   useEffect(() => {
-    if (!mounted || !type || type === 'native-banner' || !containerRef.current) return;
-    const slot = AD_SLOTS[type] as BannerSlot;
+    if (!mounted || !type || !containerRef.current) return;
+    const slot = AD_SLOTS[type];
     if (!slot) return;
+
     const iframe = document.createElement('iframe');
-    iframe.src = slot.src;
-    iframe.width = String(slot.width);
-    iframe.height = String(slot.height);
-    iframe.sandbox.add('allow-scripts', 'allow-same-origin');
+    if (slot.type === 'native-banner') {
+      const nativeSlot = slot as NativeSlot;
+      iframe.srcdoc = `<!DOCTYPE html><html><head><script>Object.defineProperty(window,'top',{get:function(){return window.self}});Object.defineProperty(window,'parent',{get:function(){return window.self}});Object.defineProperty(window,'frameElement',{get:function(){return null}});(function(){var oP=history.pushState,oR=history.replaceState;history.pushState=function(){return oP.apply(this,arguments)};history.replaceState=function(){return oR.apply(this,arguments)}})();</script></head><body style="margin:0"><div id="${nativeSlot.containerId}"></div><script src="${nativeSlot.scriptUrl}" async></script></body></html>`;
+      iframe.style.width = '100%';
+      iframe.style.minHeight = '120px';
+    } else {
+      const bannerSlot = slot as BannerSlot;
+      iframe.src = bannerSlot.src;
+      iframe.width = String(bannerSlot.width);
+      iframe.height = String(bannerSlot.height);
+    }
+    iframe.sandbox.add('allow-scripts');
     iframe.scrolling = 'no';
     iframe.style.border = 'none';
     iframe.style.maxWidth = '100%';
@@ -38,30 +41,12 @@ export default function AdBanner({ type }: AdBannerProps) {
     containerRef.current.appendChild(iframe);
   }, [mounted, type]);
 
-  useEffect(() => {
-    if (!mounted || type !== 'native-banner' || !containerRef.current) return;
-    const slot = AD_SLOTS['native-banner'] as NativeSlot;
-    const container = containerRef.current;
-
-    const guardScript = document.createElement('script');
-    guardScript.textContent = HIJACK_GUARD;
-    container.appendChild(guardScript);
-
-    const div = document.createElement('div');
-    div.id = slot.containerId;
-    container.appendChild(div);
-
-    const adScript = document.createElement('script');
-    adScript.src = slot.scriptUrl;
-    adScript.async = true;
-    container.appendChild(adScript);
-  }, [mounted, type]);
-
   if (!mounted) {
-    if (type && type !== 'native-banner') {
-      const slot = AD_SLOTS[type] as BannerSlot | undefined;
-      if (slot) {
-        return <div ref={containerRef} style={{ minHeight: slot.height }} className="flex justify-center" />;
+    if (type) {
+      const slot = AD_SLOTS[type];
+      if (slot && slot.type !== 'native-banner') {
+        const bannerSlot = slot as BannerSlot;
+        return <div ref={containerRef} style={{ minHeight: bannerSlot.height }} className="flex justify-center" />;
       }
     }
     return null;
